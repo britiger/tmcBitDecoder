@@ -10,7 +10,7 @@ bitsetqueue::~bitsetqueue() {
 
 }
 
-void bitsetqueue::addValue(int value, const short length) {
+void bitsetqueue::addValue(int16_t value, const short length) {
 	int i = length - 1;
 	for(;i>-1;i--){
 		bool bit = value & (1 << i);
@@ -26,8 +26,8 @@ void bitsetqueue::setBit(bool value){
 	bits.set(size++, value);
 }
 
-int16_t bitsetqueue::getNextBits(short size) {
-	int16_t returnInt = 0;
+int32_t bitsetqueue::getNextBits(short size) {
+	int32_t returnInt = 0;
 
 
 	int i;

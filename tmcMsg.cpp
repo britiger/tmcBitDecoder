@@ -5,6 +5,7 @@
  *      Author: clorenz
  */
 
+#include "rdsDecoder.h"
 #include "tmcMsg.h"
 #include "Locations.h"
 #include "boost/date_time.hpp"
@@ -35,7 +36,7 @@ tmcMsg::~tmcMsg() {
 }
 
 void tmcMsg::setDuration(const short duration) {
-	// this->duration = duration;
+	this->duration = duration;
 }
 
 void tmcMsg::setDiversion(const bool diversion) {
@@ -176,7 +177,7 @@ time_t tmcMsg::getConvertedTime(const short time_value){
 	using namespace boost::posix_time;
 	using namespace boost::gregorian;
 
-	ptime dateTime = second_clock::universal_time();
+	ptime dateTime = rdsDecoder::getRDSTime();
 
 	if(time_value < 96) { // 0-95 Time of this Day in 15min Interval
 		short min15 = time_value % 4; // Count of 15min Blocks

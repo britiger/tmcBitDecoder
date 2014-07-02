@@ -10,7 +10,10 @@
 
 #include <iostream>
 #include "tmcDecoder.h"
+#include "boost/date_time.hpp"
 
+using namespace boost::posix_time;
+using namespace boost::gregorian;
 using namespace std;
 
 #define BLOCK_A  0
@@ -29,8 +32,11 @@ private:
 	int  tmcGroup;
 	tmcDecoder* tmc;
 
+	static ptime rdsDateTime; // Time in UTC
+	static time_duration rdsDateTimeDiff; // Difference between Local and rds time (UTC)
 
 	bool decode3A(int blocks[]);
+	bool decode4A(int blocks[]);
 	bool decodeODA(int blocks[]);
 
 public:
@@ -38,6 +44,8 @@ public:
 	~rdsDecoder();
 
 	bool decodeRDS(int blocks[]);
+
+	static ptime getRDSTime();
 
 	void resetData();
 	void printAll(ostream &out);

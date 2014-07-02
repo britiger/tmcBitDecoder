@@ -29,8 +29,8 @@ public:
 	bitsetqueue();
 	~bitsetqueue();
 
-	void addValue(int value, const short length);
-	int16_t getNextBits(short size);
+	void addValue(int16_t value, const short length);
+	int32_t getNextBits(short size);
 	bool getBit();
 	short getSize();
 

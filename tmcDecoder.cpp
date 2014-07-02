@@ -56,7 +56,7 @@ void tmcDecoder::decodeEncryptionInfo(int blocks[]){
 		encid = blocks[BLOCK_C] & 0x1F;
 		ltnbe = blocks[BLOCK_D] >> 10 & 0x3F;
 
-		cerr << "ENCID: " << encid << endl;
+		// cerr << "ENCID: " << encid << endl;
 	}
 }
 
