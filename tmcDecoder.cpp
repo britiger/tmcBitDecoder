@@ -162,6 +162,15 @@ const char* tmcDecoder::getProviderName(){
 
 void tmcDecoder::processMessage(){
 	lastMsg->processOptional();
-	// TODO: Process Message into List
 	cout << *lastMsg << endl;
+	// TODO: Process Message into List
+	list<ITMCListener*>::iterator iter = this->listeners.begin();
+	while(iter != listeners.end()) {
+		(*iter)->processTMCMessage(*lastMsg);
+		iter++;
+	}
+}
+
+void tmcDecoder::addListener(ITMCListener* listener) {
+	this->listeners.push_back(listener);
 }

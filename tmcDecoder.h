@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "tmcMsg.h"
+#include "ITMCListener.h"
 
 using namespace std;
 
@@ -37,6 +38,8 @@ private:
 
 	tmcMsg* lastMsg;
 
+	list<ITMCListener*> listeners;
+
 	void decodeEncryptionInfo(int blocks[]);
 	void decodeTuningInfo(int blocks[]);
 	void decodeUserMsg(int blocks[]);
@@ -52,6 +55,8 @@ public:
 	bool isProviderNameComplete();
 
 	const char* getProviderName();
+
+	void addListener(ITMCListener* listener);
 };
 
 #endif /* TMCDECODER_H_ */

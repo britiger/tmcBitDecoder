@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "tmcDecoder.h"
+#include "ITMCListener.h"
 #include "boost/date_time.hpp"
 
 using namespace boost::posix_time;
@@ -49,6 +50,8 @@ public:
 
 	void resetData();
 	void printAll(ostream &out);
+
+	void addTMCListener(ITMCListener* listener);
 };
 
 

@@ -25,6 +25,21 @@ tmcMsg::tmcMsg(bool single, bool negDirection, short extend, int event,
 	infoBlocks.push_back(currentInfoBlock);
 }
 
+tmcMsg::tmcMsg(const tmcMsg& msg) : single(msg.single), negDirection(msg.negDirection), extend(msg.extend), location(
+		msg.location), sourceLocation(NULL), duration(msg.duration), diversion(NULL), currentInfoBlock(
+		NULL), startTime(NULL), stopTime(NULL), urgent(msg.urgent), directionaly(
+		msg.directionaly), dynamic(msg.dynamic), spoken(msg.spoken), invertDirectionaly(msg.invertDirectionaly){
+
+	if(msg.sourceLocation) {
+		this->sourceLocation = new int;
+		*this->sourceLocation = *(msg.sourceLocation);
+	}
+	if(msg.diversion) {
+		this->diversion = new bool;
+		*this->diversion = *(msg.diversion);
+	}
+}
+
 tmcMsg::~tmcMsg() {
 	delete diversion;
 	delete startTime;

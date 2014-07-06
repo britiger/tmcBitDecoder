@@ -140,3 +140,7 @@ void rdsDecoder::printAll(ostream &out) {
 	out << " Group: " << lastGrp << (lastGrpB?"B":"A");
 	out << endl;
 }
+
+void rdsDecoder::addTMCListener(ITMCListener* listener) {
+	tmc->addListener(listener);
+}

@@ -50,6 +50,7 @@ private:
 	time_t getConvertedTime(const short time);
 public:
 	tmcMsg(bool single, bool negDirection, short extend, int event, int location);
+	tmcMsg(const tmcMsg& msg);
 	~tmcMsg();
 
 	void setDuration(const short duration);
