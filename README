@@ -1,0 +1,17 @@
+tmcBitDecoder
+
+TODO:
+ - Makefile
+ - Inputs:
+   - RDS - Bitstream
+   - I2C (Si4735)
+ - Manual
+ - Encryption Handling
+ - more RDS decoding
+ - mysql output
+   - data-model
+
+Test and Find Errors:
+ - Start / Stop
+ - Quantifiers
+ - SuppInfos

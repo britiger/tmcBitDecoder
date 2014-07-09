@@ -34,6 +34,7 @@ private:
 
 public:
 	tmcInfoBlock(short event = 0);
+	tmcInfoBlock(const tmcInfoBlock& block);
 	~tmcInfoBlock();
 
 	void setSpeed(const char speed);

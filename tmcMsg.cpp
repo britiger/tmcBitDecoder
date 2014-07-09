@@ -31,12 +31,20 @@ tmcMsg::tmcMsg(const tmcMsg& msg) : single(msg.single), negDirection(msg.negDire
 		msg.directionaly), dynamic(msg.dynamic), spoken(msg.spoken), invertDirectionaly(msg.invertDirectionaly){
 
 	if(msg.sourceLocation) {
-		this->sourceLocation = new int;
-		*this->sourceLocation = *(msg.sourceLocation);
+		this->sourceLocation = new int(*msg.sourceLocation);
 	}
 	if(msg.diversion) {
-		this->diversion = new bool;
-		*this->diversion = *(msg.diversion);
+		this->diversion = new bool(*msg.diversion);
+	}
+	if(msg.startTime) {
+		this->startTime = new time_t(*msg.startTime);
+	}
+	if(msg.stopTime) {
+		this->stopTime = new time_t(*msg.stopTime);
+	}
+	for (size_t i = 0; i < msg.infoBlocks.size(); ++i){
+		currentInfoBlock = new tmcInfoBlock(*msg.infoBlocks[i]);
+		infoBlocks.push_back(currentInfoBlock);
 	}
 }
 

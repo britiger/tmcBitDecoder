@@ -66,5 +66,4 @@ public:
 	friend ostream& operator<<(ostream& out, const tmcMsg& msg);
 };
 
-
 #endif /* TMCMSG_H_ */

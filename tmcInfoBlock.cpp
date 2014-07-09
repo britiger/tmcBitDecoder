@@ -14,6 +14,21 @@ tmcInfoBlock::tmcInfoBlock(short event): speed(NULL), length(NULL), currentUgent
 		addEvent(event);
 }
 
+tmcInfoBlock::tmcInfoBlock(const tmcInfoBlock& block):speed(NULL), length(NULL), currentUgent(block.currentUgent),
+		maxUrgent(block.maxUrgent), directionaly(block.directionaly) {
+	if(block.speed) {
+		speed = new char(*block.speed);
+	}
+	if(block.length) {
+		length = new char(*block.length);
+	}
+	events.assign(block.events.begin(), block.events.end());
+	diversions.assign(block.diversions.begin(), block.diversions.end());
+	destinations.assign(block.destinations.begin(), block.destinations.end());
+	quantifiers = block.quantifiers;
+	suppInfos = block.suppInfos;
+}
+
 tmcInfoBlock::~tmcInfoBlock(){
 
 }
