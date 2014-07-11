@@ -15,7 +15,7 @@ const short tmcMsg::labelLength[] = { 3, 3, 5, 5, 5, 8, 8, 8, 8, 11, 16, 16, 16,
 
 tmcMsg::tmcMsg(bool single, bool negDirection, short extend, int event,
 		int location) :
-		single(single), negDirection(negDirection), extend(extend), location(
+		complete_time(NULL), single(single), negDirection(negDirection), extend(extend), location(
 				location), sourceLocation(NULL), duration(0), diversion(NULL), currentInfoBlock(
 				NULL), startTime(NULL), stopTime(NULL), urgent(ur_normal), directionaly(
 				dir_none), dynamic(true), spoken(false), invertDirectionaly(
@@ -25,11 +25,13 @@ tmcMsg::tmcMsg(bool single, bool negDirection, short extend, int event,
 	infoBlocks.push_back(currentInfoBlock);
 }
 
-tmcMsg::tmcMsg(const tmcMsg& msg) : single(msg.single), negDirection(msg.negDirection), extend(msg.extend), location(
+tmcMsg::tmcMsg(const tmcMsg& msg) : complete_time(NULL), single(msg.single), negDirection(msg.negDirection), extend(msg.extend), location(
 		msg.location), sourceLocation(NULL), duration(msg.duration), diversion(NULL), currentInfoBlock(
 		NULL), startTime(NULL), stopTime(NULL), urgent(msg.urgent), directionaly(
 		msg.directionaly), dynamic(msg.dynamic), spoken(msg.spoken), invertDirectionaly(msg.invertDirectionaly){
 
+	if(msg.complete_time)
+		this->complete_time = new time_t(*msg.complete_time);
 	if(msg.sourceLocation) {
 		this->sourceLocation = new int(*msg.sourceLocation);
 	}
@@ -88,11 +90,12 @@ void tmcMsg::setStopTime(const short time) {
 
 void tmcMsg::addOptional(const int32_t content) {
 	optionalCache.addValue(content, 28);
-	// processOptional();
 }
 
 void tmcMsg::processOptional() {
-
+	complete_time = new time_t;
+	tm t = to_tm(rdsDecoder::getRDSTime());
+	*complete_time = mktime(&t);
 	int label = optionalCache.getNextBits(4);
 	if (label == 15)
 		return;
@@ -249,26 +252,28 @@ ostream& operator<<(ostream& out, const tmcMsg& msg) {
 	if (!loc)
 		cerr << "Location " << msg.location << " not found." << endl;
 
-	cout << endl << "TMC Message" << endl;
-	cout << "Type: " << (msg.single ? "Single" : "Multi") << endl;
-	cout << "Location: " << (loc ? (*loc) : msg.location) << endl;
-	cout << "Extend: " << msg.extend << endl;
-	cout << "Direction: " << (msg.negDirection ? "neg" : "pos") << endl;
-	cout << "Directionality: " << msg.directionaly << endl;
-	cout << "Urgent: " << msg.urgent << endl;
+	out << endl << "TMC Message" << endl;
+	if(msg.complete_time)
+		out << "Received: " << ctime(msg.complete_time);
+	out << "Type: " << (msg.single ? "Single" : "Multi") << endl;
+	out << "Location: " << (loc ? (*loc) : msg.location) << endl;
+	out << "Extend: " << msg.extend << endl;
+	out << "Direction: " << (msg.negDirection ? "neg" : "pos") << endl;
+	out << "Directionality: " << msg.directionaly << endl;
+	out << "Urgent: " << msg.urgent << endl;
 	if(msg.duration)
-		cout << "Duration: " << msg.duration << endl;
+		out << "Duration: " << msg.duration << endl;
 	if(msg.startTime)
-		cout << "Start: " << ctime(msg.startTime) << endl;
+		out << "Start: " << ctime(msg.startTime);
 	if(msg.stopTime)
-			cout << "Stop: " << ctime(msg.stopTime) << endl;
+		out << "Stop: " << ctime(msg.stopTime);
 
 	// cout << "BitQue: " << msg.optionalCache << endl;
-
+	out << endl;
 	for (vector<tmcInfoBlock*>::const_iterator it = msg.infoBlocks.begin();
 			it != msg.infoBlocks.end(); ++it) {
-		cout << "Info-Block:" << endl;
-		cout << **it << endl;
+		out << "Info-Block:" << endl;
+		out << **it << endl;
 	}
 
 	return out;

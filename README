@@ -8,7 +8,7 @@ TODO:
  - Manual
  - Encryption Handling
  - more RDS decoding
- - mysql output
+ - mysql/pgsql output
    - data-model
 
 Test and Find Errors:

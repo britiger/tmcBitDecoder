@@ -21,6 +21,7 @@ using namespace std;
 
 class tmcMsg {
 private:
+	time_t* complete_time;
 	bool single;
 	bool negDirection;
 	short extend;
