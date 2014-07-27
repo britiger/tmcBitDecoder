@@ -1,17 +1,23 @@
 tmcBitDecoder
 
 TODO:
- - Makefile
  - Inputs:
    - RDS - Bitstream
    - I2C (Si4735)
  - Manual
  - Encryption Handling
  - more RDS decoding
- - mysql/pgsql output
+ - mysql/pgsql output (seperate projects)
    - data-model
 
 Test and Find Errors:
  - Start / Stop
  - Quantifiers
  - SuppInfos
+
+Compiling:
+ - mkdir build
+ - cd build
+ - cmake ..
+ - make
+
